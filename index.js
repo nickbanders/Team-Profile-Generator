@@ -1,11 +1,11 @@
 const inquirer = require("inquirer");
-const fileWrite = require('./src/fileWrite');
+const fileWrite = require('./src/generate');
 const generatePage = require('./src/template');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 
-const addManager = () => {
+const addMngr = () => {
     return inquirer
     .prompt([
         {
@@ -51,8 +51,8 @@ const addManager = () => {
             type: "input",
             name: "officeNumber",
             message: "What is your manager's office number?",
-            validate: (numberInput) => {
-                if (numberInput) {
+            validate: (officeNumber) => {
+                if (officeNumber) {
                     return true;
                 } else {
                     console.log("Please enter an office number");
@@ -62,9 +62,11 @@ const addManager = () => {
         }
     ])
     .then(managerAnswers => {
+        const topPage = generatePage.generateTop();
+        fileWrite.writeFile(topPage);
         const { name, id, email, officeNumber } = managerAnswers;
         const manager = new Manager(name, id, email, officeNumber);
-        const managerHTML = generatePage.managerAdd(manager);
+        const managerHTML = generatePage.addManager(manager);
         fileWrite.appendFile(managerHTML);
     })
 };
@@ -164,7 +166,7 @@ const addEmployees = () => {
             else if(role === "Intern") {
                 let intern = new Intern(name, id, email, school);
                 let internHTML = generatePage.addIntern(intern);
-                filWrite.appendFile(internHTML);
+                fileWrite.appendFile(internHTML);
             }
 
             if(confirmEmployees) {
@@ -174,7 +176,7 @@ const addEmployees = () => {
 
 };
 
-addManager()
+addMngr()
   .then(addEmployees)
-//   .then(fileWrite.appendFile(generatePage.generateBottom()))
-//   .then(fileWrite.copyFile());
+  .then(fileWrite.appendFile(generatePage.generateBottom()))
+  .then(fileWrite.copyFile());

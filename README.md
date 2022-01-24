@@ -4,7 +4,7 @@
 ### [GitHub](https://github.com/nickbanders) | email: nickbanders@gmail.com
 
 ## Video Walkthrough
-[View on Google Drive](https://drive.google.com/file/d/1rgWT-Nzv2FGxvwcm7a3ekW2GdJOdVq9Q/view)
+[View on Google Drive](https://drive.google.com/)
 
 ## What it does
 By utilizing node, you are able to take in information on your team and generate it into an HTML file
